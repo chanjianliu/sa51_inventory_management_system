@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>Stock Usage List</title>
+</head>
+
+<body>
+
+<!-- Header -->
+<header id="header">
+    <nav class="left">
+        <a href="#menu"><span>Menu</span></a>
+    </nav>
+    <div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+        <a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+    </div>
+    <div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+        <a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+    </div>
+    <nav class="right">
+        <a href="/logout" class="button alt">Log out</a>
+    </nav>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+    <ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+    <ul class="actions vertical">
+        <li><a href="#" class="button fit">Logout</a></li>
+    </ul>
+</nav>
+<br/>
+<h2 style="text-align: center;">Search Result</h2>
+
+<h3 style="text-align: center;" th:if="${#lists.isEmpty(products)}">No Results.</h3>
+
+<table th:if="${not #lists.isEmpty(products)}" style="width:50%; margin-left: auto; margin-right: auto;">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Colour</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Supplier</th>
+    </tr>
+    <tr th:each="product:${products}">
+        <td th:text="${product.id}">Id</td>
+        <td><a th:text="${product.name}">Name</a></td>
+        <td th:text="${product.brand}">Brand</td>
+        <td th:text="${product.colour}">Colour</td>
+        <td th:text="${product.category}">Category</td>
+        <td th:text="${product.description}">Description</td>
+        <td th:text="${product.supplier.name}">Supplier</td>
+    </tr>
+</table>
+		<div align="center" style="font-weight: bold;">
+                <a th:href="@{/all/product/list}"><button>Back to Product List</button></a>
+            </div>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

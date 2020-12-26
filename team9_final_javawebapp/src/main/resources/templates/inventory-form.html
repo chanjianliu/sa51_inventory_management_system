@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>Inventory Form</title>
+</head>
+
+<body>
+
+<!-- Header -->
+<header id="header">
+    <nav class="left">
+        <a href="#menu"><span>Menu</span></a>
+    </nav>
+    <div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+        <a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+    </div>
+    <div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+        <a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+    </div>
+    <nav class="right">
+        <a href="/logout" class="button alt">Log out</a>
+    </nav>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+    <ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+    <ul class="actions vertical">
+        <li><a href="/logout" class="button fit">Logout</a></li>
+    </ul>
+</nav>
+
+<h1>Inventory Form</h1>
+
+<form action="#" th:object="${inventory}" th:action = "@{/all/product/inventory/save/}+${product.id}" method = "post">
+    <table>
+        <tr colspan=3>
+            <th th:text="${product.name}"></th>
+        </tr>
+        <tr>
+            <th >Shelf Location</th>
+            <th >Quantity</th>
+            <th >Product State</th>
+        </tr>
+        <tr class="table-row">
+            <td>
+                <input type="hidden" th:field="*{id}" th:value="*{id}">
+                <input type="number" th:field="*{shelfLocation}" th:value="*{shelfLocation}" th:min="0"></td>
+            <td><input type="number" th:field="*{quantity}" th:value="*{quantity}" th:min="1"></td>
+            <td>
+                <fieldset>
+                    <select th:field="*{productState}">
+                        <option value="InStock">In Stock</option>
+                        <option value="BelowReorderLevel">Below Reorder Level</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('productState')}" th:errors="*{productState}"></p>
+                </fieldset></td>
+        </tr>
+    </table>
+    <p>
+        <input type="submit" value="Save" /> &nbsp; &nbsp;
+        <input type="reset" value="Reset" />
+    </p>
+
+</form>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

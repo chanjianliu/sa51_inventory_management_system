@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+<meta charset="utf-8" />
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/css/main.css" />
+<title>Inventory Form</title>
+</head>
+
+<body>
+
+	<!-- Header -->
+	<header id="header">
+		<nav class="left">
+			<a href="#menu"><span>Menu</span></a>
+		</nav>
+		<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+			<a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+		</div>
+		<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+			<a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+		</div>
+		<nav class="right">
+			<a href="/logout" class="button alt">Log out</a>
+		</nav>
+	</header>
+
+	<!-- Menu -->
+	<nav id="menu">
+		<ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+		<ul class="actions vertical">
+			<li><a href="/logout" class="button fit">Logout</a></li>
+		</ul>
+	</nav>
+
+	<h2>Inventory Detail</h2>
+
+	<table style="width: 50%; margin-left: auto; margin-right: auto;">
+		<tr>
+			<td>Product Id: <span th:text="${item.id}"> </span></td>
+		</tr>
+		<tr>
+			<td>Name: <span th:text="${item.product.name}"> </span></td>
+		</tr>
+		<tr>
+			<td>Brand: <span th:text="${item.product.brand}"> </span></td>
+		</tr>
+		<tr>
+			<td>Price: <span th:text="${item.product.retailPrice}"> </span></td>
+		</tr>
+		<tr>
+			<td>Description: <span th:text="${item.product.description}">
+			</span></td>
+		</tr>
+		<tr>
+			<td>Colour: <span th:text="${item.product.colour}"> </span></td>
+		</tr>
+		<tr>
+			<td>Quantity: <span th:text="${item.quantity}"> </span></td>
+		</tr>
+		<tr>
+			<td>DOM: <span
+				th:text="${#temporals.format(item.product.dom, 'dd-MMM-yyyy')}">
+			</span></td>
+		</tr>
+		<tr>
+			<td>Stock Status: <span th:text="${item.productState}"><!-- <a
+					th:href="@{/all/catalogue/showcustomer/}+${item.productState}"
+					th:text="${item.productState}"></a> --> </span></td>
+		</tr>
+		<tr>
+			<td>Damaged Quantity: <span th:text="${item.damagedQuantity}"></span></td>
+		</tr>
+		<tr>
+
+			<td th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a th:href="@{/admin/changeStatus/}+${item.id}"><button>
+					Edit</button></a></td>
+		</tr>
+
+		<!--     <tr>
+
+        <td><a th:href="@{/all/catalogue/changeStatus/}+${item.id}">Update Stock Status</a></td>
+    </tr> -->
+	</table>
+
+	<br />
+	<table style="width: 50%; margin-left: auto; margin-right: auto;">
+		<tr>
+			<th colspan=5><h5 align="center">Item Usage</h5></th>
+		</tr>
+		<tr>
+			<th>Customer Id</th>
+			<th>Customer Name</th>
+			<th>Car Id</th>
+			<th>Quantity</th>
+			<th>Registration Date</th>
+
+
+		</tr>
+		<tr th:each="obj:${usagesOfTheInventory}">
+			<td th:text="${obj.stockUsage.id}">Customer Id</td>
+			<td><a
+				th:href="@{/all/catalogue/showcustomer/}+${obj.stockUsage.id}"
+				th:text="${obj.stockUsage.customerName}">Customer Name</a></td>
+			<td th:text="${obj.stockUsage.carId}">Brand</td>
+			<td th:text="${obj.quantity}">Retail Price</td>
+			<td
+				th:text="${#temporals.format(obj.registrationDate, 'dd-MMM-yyyy')}">Date</td>
+
+		</tr>
+		<tr>
+			<td><a th:href="@{/all/product/list/}">
+					<button>Back to Inventory List</button>
+			</a> <a th:href="@{/all/catalogue/listrecord/}">
+					<button>Back to Inventory Usage List</button>
+			</a></td>
+		</tr>
+	</table>
+
+	<!-- Scripts -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.scrolly.min.js"></script>
+	<script src="/js/skel.min.js"></script>
+	<script src="/js/util.js"></script>
+	<script src="/js/main.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+</body>
+</html>

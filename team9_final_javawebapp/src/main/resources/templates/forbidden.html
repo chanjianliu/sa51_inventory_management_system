@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>List All Products</title>
+</head>
+
+<body>
+
+<nav id="menu">
+    <ul class="links">
+        <!-- <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/dashboard" >Admin Dashboard</a></li>
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}"><a href="/mechanic/dashboard">Mechanic Dashboard</a></li> -->
+        <!--can add more links to navigate here-->
+    </ul>
+    <ul class="links">
+       <!--  <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li> -->
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+    <ul class="actions vertical">
+        <li><a href="#" class="button fit">Logout</a></li>
+    </ul>
+</nav>
+
+<!--not working yet-->
+
+<body class="bg-white py-5">
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-2 text-center">
+            <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Status Code: 403</p>
+        </div>
+        <div class="col-md-10">
+            <h3>Unauthorized Access</h3>
+            <a class="btn btn-danger" href="/login">Login Page</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+
+
+
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

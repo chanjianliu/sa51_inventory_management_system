@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<meta charset="utf-8" />
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/main.css" />
+	<title>Customer Usage Record</title>
+</head>
+
+<body>
+
+<!-- Header -->
+<header id="header">
+	<nav class="left">
+		<a href="#menu"><span>Menu</span></a>
+	</nav>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+		<a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+		<a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<nav class="right">
+		<a href="/logout" class="button alt">Log out</a>
+	</nav>
+</header>
+
+<nav id="menu">
+	<ul class="links">
+		<li><a th:href="@{/all/catalogue/customers}">Customer List</a></li>
+	</ul>
+	<ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+	<ul class="actions vertical">
+		<li><a href="#" class="button fit">Logout</a></li>
+	</ul>
+</nav>
+
+
+<form action="#" th:object="${newUsageRecord}"
+	  th:action="@{/all/catalogue/saveusagerecord/}+${newUsageRecord.stockUsage.id}" method="post">
+	<fieldset><input type="hidden" th:field="*{id}" th:value="*{id}"></fieldset>
+	<fieldset>Id: <input type="hidden" th:field="*{stockUsage.id}" th:value="*{stockUsage.id}"><span th:text="*{stockUsage.id}">Id</span> </fieldset>
+	<fieldset>Customer Name: <input type="hidden" th:field="*{stockUsage.customerName}" th:value="*{stockUsage.customerName}"><span th:text="*{stockUsage.customerName}">Customer Name</span> </fieldset>
+	<fieldset>Car Id: <input type="hidden" th:field="*{stockUsage.carId}" th:value="*{stockUsage.carId}"><span th:text="*{stockUsage.carId}">Customer Name</span></fieldset>
+	<br/>
+
+	<fieldset>
+		<table>
+			<theader>
+				<tr>
+					<th>Item</th>
+					<th>Quantity</th>
+					<th>Date</th>
+				</tr>
+			</theader>
+			<tbody>
+			<tr>
+				<td th:if="${not #lists.isEmpty(inventories)}">
+					<select th:field=" ${newUsageRecord.productId}">
+					<option th:each="inventory:${inventories}" th:value="${inventory.id}" th:text="${inventory.product.name}"></option>
+				</select>
+					<p
+							th:if="${#fields.hasErrors('productId')}"
+							th:errors="${newUsageRecord.productId}"></p>
+				</td>
+
+				<td><input type="number"
+						   th:field="${newUsageRecord.quantity}" th:min="1" required>
+					<p
+							th:if="${#fields.hasErrors('quantity')}"
+							th:errors="${newUsageRecord.quantity}"></p>
+				</td>
+
+				<td><input type="date"
+						   th:field="${newUsageRecord.registrationDate}" required/>
+					<p
+							th:if="${#fields.hasErrors('registrationDate')}"
+							th:errors="${newUsageRecord.registrationDate}"></p>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</fieldset>
+
+	<fieldset>
+		<input type="submit" value="Save" /> &nbsp; &nbsp; <input
+			type="reset" value="Reset" />
+	</fieldset>
+</form>
+
+<br/>
+
+<table>
+	<tr>
+		<td>
+			<a th:href="@{/all/catalogue/showcustomer/}+${newUsageRecord.stockUsage.id}"><button>Return to Customer Detail</button></a>
+		</td>
+	</tr>
+</table>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

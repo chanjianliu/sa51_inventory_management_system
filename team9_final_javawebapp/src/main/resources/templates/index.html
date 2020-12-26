@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Team 9 Motors</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+<div th:fragment="header" id="header"></div>
+<body>
+<!-- Header -->
+<header id="header">
+    <a href="/index" class="logo">Team 9 Motors</a>
+    <nav class="right">
+        <a href="/login" class="button alt">Log in</a>
+    </nav>
+</header>
+
+
+
+<!-- Banner -->
+<section id="banner">
+    <div class="content">
+        <img th:src="@{/images/slider_1.png}">
+        <h1>Car Servicing & Auto Repair Shop</h1>
+        <p>Our car workshop has been servicing our long time clients for over 30 years since the company started. Our in-house mechanics are trained to provide a wide range of automotive services whether you need a body repair job (panel beating), an
+            engine overhaul, or any other general repair servicing you’ll need.</p>
+        <ul class="actions">
+            <li><a href="#one" class="button scrolly">About Us</a></li>
+        </ul>
+    </div>
+</section>
+
+<!-- One -->
+<section id="one" class="wrapper">
+    <div class="inner flex flex-3">
+        <div class="flex-item left">
+            <div>
+                <h3>Effective</h3>
+                <p>We hire only certified mechanics<br /> with industry experience.</p>
+            </div>
+            <div>
+                <h3>Affordable</h3>
+                <p>Providing the lowest repair prices<br />without compromising quality.</p>
+            </div>
+        </div>
+        <div class="flex-item image fit round">
+            <img th:src="@{/images/autoshop.jpg}" alt="" />
+        </div>
+        <div class="flex-item right">
+            <div>
+                <h3>Efficient</h3>
+                <p>Fastest car repair and maintenance<br /> service in Singapore.</p>
+            </div>
+            <div>
+                <h3>Friendly</h3>
+                <p>Our staff are always willing to assist you<br /> with smiles & enthusiasm.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Two -->
+<section id="two" class="wrapper style1 special">
+    <div class="inner">
+        <h2>Company Vision</h2>
+        <figure>
+            <blockquote>
+                "We seek to achieve customer satisfaction through efficient service and customer care."
+            </blockquote>
+            <footer>
+                <cite class="author">Chan Jian Liu</cite>
+                <cite class="company">CEO, Team 9 Motors</cite>
+            </footer>
+        </figure>
+    </div>
+</section>
+
+<!-- Three -->
+<section id="three" class="wrapper">
+    <div class="inner flex flex-3">
+        <div class="flex-item box">
+            <div class="image fit">
+                <img src="images/pic02.jpg" alt="" />
+            </div>
+            <div class="content">
+                <h3>Services</h3>
+                <p>Car Repair services.</p>
+            </div>
+        </div>
+        <div class="flex-item box">
+            <div class="image fit">
+                <img src="images/pic03.jpg" alt="" />
+            </div>
+            <div class="content">
+                <h3>Maintenance Services</h3>
+                <p>Car Maintenance Services</p>
+            </div>
+        </div>
+        <div class="flex-item box">
+            <div class="image fit">
+                <img src="images/pic04.jpg" alt="" />
+            </div>
+            <div class="content">
+                <h3>Consultations</h3>
+                <p>Book an appointment with a licensed car mechanic.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <h2>Contact Us</h2>
+        <ul class="actions">
+            <li><span><img th:src="@{/images/icon1.svg}" style="height: 15px; width:15px"></span> <a href="#">(65) 6516-6666</a></li>
+            <li><span><img th:src="@{/images/email.svg}" style="height: 15px; width:15px"></span> <a href="#">team9motors@nus.edu.sg</a></li>
+            <li><span><img th:src="@{/images/pin.svg}" style="height: 15px; width:15px"></span> 29 Heng Mui Keng Terrace, Block D & E, Singapore 119620</li>
+        </ul>
+    </div>
+    <div class="copyright">
+        <div><small>Time now is: <b th:text="${execInfo.now.time}"></b></small>
+            <br/>
+        &copy;<span>Team 9: Chan Jian Liu, Xiao Changwei, Zhu Haokun, Rukaya Afrin, Zhang Hongduo, Zhou Yanjun, Liu Lei, Niveditha Ramakrishnan </span>
+        <br /> &copy;Design <a href="https://templated.co">TEMPLATED</a>.
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+</body>
+
+</html>

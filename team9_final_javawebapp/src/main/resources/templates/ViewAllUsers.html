@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>List All Employees</title>
+</head>
+
+
+<body>
+<!-- Header -->
+<header id="header">
+    <nav class="left">
+        <a href="#menu"><span>Menu</span></a>
+    </nav>
+    <a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+    <nav class="right">
+        <a href="/logout" class="button alt">Log out</a>
+    </nav>
+</header>
+<!-- Menu -->
+
+<nav id="menu">
+    <ul class="links">
+        <li><a href="/admin/adduser">Register New Employee</a></li>
+    </ul>
+
+	<ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+    <ul class="actions vertical">
+        <li><a href="#" class="button fit">Logout</a></li>
+    </ul>
+</nav>
+
+<br/>
+
+
+<h2 style="text-align: center">Employee List</h2>
+<div style="text-align: center; font-weight: bold;">
+    <a href="/admin/adduser" >Register New Employee</a>
+</div>
+<br/>
+
+<div>
+    <table th:if="${not #lists.isEmpty(users)}" style="width:50%; margin-left: auto; margin-right: auto;">
+        <tr >
+            <th ><a th:href="@{'/admin/page/' +${currentPage} + '?sortField=id&sortDir=' +${reverseSortDir}}">
+			ID</a></th>
+            <th ><a th:href="@{'/admin/page/' +${currentPage} + '?sortField=firstName&sortDir=' +${reverseSortDir}}">
+			First Name</a></th>
+            <th ><a th:href="@{'/admin/page/' +${currentPage} + '?sortField=lastName&sortDir=' +${reverseSortDir}}">
+			Last Name</a></th>
+            <th ><a th:href="@{'/admin/page/' +${currentPage} + '?sortField=username&sortDir=' +${reverseSortDir}}">
+			Username</a></th>
+            <th><a th:href="@{'/admin/page/' +${currentPage} + '?sortField=email&sortDir=' +${reverseSortDir}}">
+			Email</a></th>
+             <th ><a th:href="@{'/admin/page/' +${currentPage} + '?sortField=role&sortDir=' +${reverseSortDir}}">
+		    Role</a></th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <tr th:each="user:${users}">
+            <td > <a href="ShowUserDetail.html" th:href="@{/admin/showuser/} + ${user.id}" th:text=${user.id}>Employee ID</a></td>
+            <td th:text=${user.firstName}>First Name</td>
+            <td th:text=${user.lastName}>Last Name</td>
+            <td th:text=${user.username}>Username</td>
+            <td th:text="${user.email}">Email</td>
+            <td th:text=${user.Role}>Role</td>
+            <td><a href="EditUser.html"	th:href="@{/admin/edit/} + ${user.id}">Edit</a></td>
+            <td><a href="DeleteUser.html"	th:href="@{/admin/delete/}+${user.id}">Delete</a></td>
+
+        </tr>
+    </table>
+</div>
+
+<!--<div align="left"><a href="/admin/adduser"><button>Register New Employee</button></a></div>-->
+<br/>
+<div style="text-align: center;">
+    Total Items: [[${total}]] - Page [[${currentPage}]] of [[${totalPages}]]
+    &nbsp; -&nbsp;
+
+    <a th:if="${currentPage >1}" th:href="@{'/admin/page/1?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> First</a>
+    <span th:unless="${currentPage >1}"> First</span>
+    &nbsp;&nbsp;
+
+    <a th:if="${currentPage >1}" th:href="@{'/admin/page/' + ${currentPage - 1}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Previous</a>
+    <span th:unless="${currentPage >1}"> Previous</span>
+    &nbsp;&nbsp;
+
+    <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+	       <a th:if="${i != currentPage}" th:href="@{'/admin/page/'+ ${i}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}">[[${i}]]</a>
+	       <span th:unless="${i != currentPage}" >[[${i}]]</span>
+	       &nbsp;&nbsp;
+	     </span>
+
+    <a th:if="${currentPage <totalPages}" th:href="@{'/admin/page/' + ${currentPage + 1}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Next</a>
+    <span th:unless="${currentPage <totalPages}"> Next</span>
+    &nbsp;&nbsp;
+
+    <a th:if="${currentPage <totalPages}" th:href="@{'/admin/page/' + ${totalPages}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}">Last</a>
+    <span th:unless="${currentPage <totalPages}"> Last</span>
+
+</div>
+<br/>
+
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</body>
+</html>

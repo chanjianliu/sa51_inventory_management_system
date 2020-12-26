@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main1.css" />
+    <title>Login Page</title>
+</head>
+<style>
+
+    table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .inputkey {
+        padding: 14px 20px;
+    }
+</style>
+<body>
+<!-- Header -->
+<header id="header">
+
+    <a href="/index"class ="logo">Team 9 Motors</a>
+</header>
+
+<form th:object="${user}" th:action="@{/login}" method="post">
+    <table style="height: 500px; width: 800px;">
+        <tr> </tr>
+        <tr>
+            <td width="4000px">
+                        <fieldset>
+                            <figure style="margin-bottom: 50px; text-align: left;">
+                                <img th:src="@{images/about_us.png}" style="margin-top: 200px; margin:1px; padding-left:10px ;  height:350px;">
+                            </figure>
+                        </fieldset>
+            </td>
+            <td class="inputkey">
+                <h2 style="line-height:1.66px; font-weight: bold; color:black; font-size: 36px; display: block;"> Login</h2>
+                <br />
+                <div style="width:400px;  margin-bottom: 25px; overflow: hidden; display: block;">
+                    <div th:if="${param.error}" style="text-align: center; color: red; font-weight:bold ">Bad Credentials</div>
+                    <fieldset style="font-weight: bold">
+                        Username:
+                        <input id="username" type="text" th:field="*{username}" name="username" class="form-control" placeholder="Username" style="width:100%; display: block; box-sizing: border-box;" />
+                    </fieldset>
+                    <fieldset style="font-weight: bold">
+                        Password:
+                        <input id="password" type="password"  th:field="*{password}" name="password" class="form-control" placeholder="Password" style="width:100%; display: block; box-sizing: border-box;" />
+                    </fieldset>
+                    <br />
+                    <fieldset>
+                        <input type="Submit" value="Log In" class="btn btn-danger" style="padding:15px 39px; display: inline-block; width:100%; height:10%;" />
+                    </fieldset>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<!-- Footer -->
+<footer id="footer">
+
+    <div class="inner">
+        <h2>Contact Us</h2>
+        <ul class="actions">
+            <li><span><img th:src="@{/images/icon1.svg}" style="height: 15px; width:15px"></span> <a href="#">(65) 6516-6666</a></li>
+            <li><span><img th:src="@{/images/email.svg}" style="height: 15px; width:15px"></span> <a href="#">team9motors@nus.edu.sg</a></li>
+            <li><span><img th:src="@{/images/pin.svg}" style="height: 15px; width:15px"></span> 29 Heng Mui Keng Terrace, Block D & E, Singapore 119620</li>
+        </ul>
+    </div>
+    <div class="copyright">
+        <div><small>Time now is: <b th:text="${execInfo.now.time}"></b></small>
+            <br/>
+            &copy;<span>Team 9: Chan Jian Liu, Xiao Changwei, Zhu Haokun, Rukaya Afrin, Zhang Hongduo, Zhou Yanjun, Liu Lei, Niveditha Ramakrishnan </span>
+            <br /> &copy;Design <a href="https://templated.co">TEMPLATED</a>.
+        </div>
+    </div>
+</footer>
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

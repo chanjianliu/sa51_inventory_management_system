@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Team 9 Motors</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width= device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+<div th:fragment="header" id="header">
+
+</div>
+<div th:fragment="menu" id="menu">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/login"><img th:src="@{logo.png}"></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/index">Home</a></li>
+                <!-- 					<li class="dropdown"><a class="dropdown-toggle"
+                                        data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Page 1-1</a></li>
+                                            <li><a href="#">Page 1-2</a></li>
+                                            <li><a href="#">Page 1-3</a></li>
+                                        </ul></li> -->
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right" >
+                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span>
+                    Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<footer th:fragment="footer" id='footer' class="page-footer bg-primary text-white">
+    <div><small>Now is: <b th:text="${execInfo.now.time}"></b>
+
+    </small>
+        <br/>
+        <small>(c) Team 9 Inventory Management System <br />
+            ISS, NUS 2020
+        </small>
+
+    </div>
+</footer>
+
+</body>
+</html>

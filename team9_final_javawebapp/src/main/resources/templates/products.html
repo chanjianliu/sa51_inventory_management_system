@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<meta charset="utf-8" />
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/main.css" />
+	<title>List All Products</title>
+</head>
+
+<body>
+<!-- Header -->
+<header id="header">
+	<nav class="left">
+		<a href="#menu"><span>Menu</span></a>
+	</nav>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+	<a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+		<a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<nav class="right">
+		<a href="/logout" class="button alt">Log out</a>
+	</nav>
+</header>
+
+<!-- Menu -->
+
+<nav id="menu">
+    <ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+    <ul class="actions vertical">
+        <li><a href="#" class="button fit">Logout</a></li>
+    </ul>
+</nav>
+
+<h2 style="text-align: center;">Search</h2>
+<table style="margin-right: auto; margin-left: auto; width: 50%">
+	<tr>
+
+	</tr>
+	<tr>
+		<td>
+			<form action="#"  th:action="@{/all/product/searching}" method="post">
+				<div style="font-weight: bold">
+				Search: <input type="text" name="keyword" />
+				</div>
+				<div style="font-weight: bold">
+					Category:
+				</div>
+
+				<select name="searchtype">
+					<option value="name">Name</option>
+					<option value="brand">Brand</option>
+					<option value="colour">Color</option>
+					<option value="category">Category</option>
+					<option value="description">Description</option>
+					<option value="supplier">Supplier</option>
+				</select>
+				<div>
+
+				</div>
+					<fieldset>
+						<input type="submit" value="Search" />
+					</fieldset>
+			</form>
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+<h2 style="text-align: center">Product List</h2>
+<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}" style="text-align: center; font-weight: bold;"><a th:href="@{/admin/product/add}">Add New Product</a></div>
+<br/>
+<h2 th:if="${#lists.isEmpty(products)}" style="text-align: center">Product List is
+	empty</h2>
+	<div>
+<table th:if="${not #lists.isEmpty(products)}" style="width:50%; margin-left: auto; margin-right: auto;">
+	<tr>
+		<th > <a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=inventory.id&sortDir=' +${reverseSortDir}}">
+			Product Id</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=name&sortDir=' +${reverseSortDir}}">			
+			Name</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=brand&sortDir=' +${reverseSortDir}}">
+			Brand</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=dom&sortDir=' +${reverseSortDir}}">
+			DOM</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=colour&sortDir=' +${reverseSortDir}}">
+			Colour</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=oriPrice&sortDir=' +${reverseSortDir}}">
+			Original Price</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=wholesalePrice&sortDir=' +${reverseSortDir}}">
+			Whole Sale Price</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=retailPrice&sortDir=' +${reverseSortDir}}">
+			Retail Price</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=partnerPrice&sortDir=' +${reverseSortDir}}">
+			Partner Price</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=description&sortDir=' +${reverseSortDir}}">
+			Description</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=dimension&sortDir=' +${reverseSortDir}}">
+			Dimension</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=category&sortDir=' +${reverseSortDir}}">
+			Category
+			</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=reorderLevel&sortDir=' +${reverseSortDir}}">
+			Reorder Level</a></th>
+			<th ><a th:href="@{'/all/product/page/' +${currentPage} + '?sortField=minReorderQuantity&sortDir=' +${reverseSortDir}}">
+			minReorder Quantity</a></th>
+			<th > Supplier </th>
+			<th> Shelf Location </th>
+			<th> Quantity </th>
+			<th> Product State </th>
+		<th th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">Edit Product</th>
+		<th th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">Delete Product</th>
+
+	</tr>
+	<tr th:each="product:${products}" class="table-row">
+		<td th:text="${product.inventory.id}">Id</td>
+		<td><a th:href="@{/all/catalogue/showinventory/}+${product.inventory.id}" th:text="${product.name}">name</a></td>
+		<td th:text="${product.brand}">brand</td>
+		<td th:text="${#temporals.format(product.dom, 'dd-MMM-yyyy')}">dom</td>
+		<td th:text="${product.colour}">colour</td>
+		<td th:text="${product.oriPrice}">oriPrice</td>
+		<td th:text="${product.wholesalePrice}">wholesalePrice</td>
+		<td th:text="${product.retailPrice}">retailPrice</td>
+		<td th:text="${product.partnerPrice}">partnerPrice</td>
+		<td th:text="${product.description}">desc</td>
+		<td th:text="${product.dimension}">dimension</td>
+		<td th:text="${product.category}">category</td>
+		<td th:text="${product.reorderLevel}">reorderlevel</td>
+		<td th:text="${product.minReorderQuantity}">minRQ</td>
+		<td > <a th:href="@{/all/supplier/detail/}+${product.supplier.id}"> <span th:text="${product.supplier.name}">supplierName </span></a></td>
+		<td th:text="${product.inventory.shelfLocation}">ShelfLocation</td>
+		<td th:text="${product.inventory.quantity}">Quantity</td>
+		<td th:text="${product.inventory.productState}">ProductState</td>
+		<td th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="EditProduct.html"
+			   th:href="@{/admin/product/edit/}+${product.id}">Edit</a></td>
+		<td th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="DeleteProduct.html"
+			   th:href="@{/admin/product/delete/}+${product.id}">Delete</a></td>
+	</tr>
+</table>
+</div>
+
+<div>&nbsp;</div>
+	<br/>
+	<div style="text-align: center;">
+	     Total Items:[[${total}]] - Page[[${currentPage}]] of [[${totalPages}]]
+	     &nbsp; -&nbsp;
+	     
+	     <a th:if="${currentPage >1}" th:href="@{'/all/product/page/1?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> First</a>
+	     <span th:unless="${currentPage >1}"> First</span>
+	     &nbsp;&nbsp;
+	     
+	     <a th:if="${currentPage >1}" th:href="@{'/all/product/page/' + ${currentPage - 1}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Previous</a>
+	     <span th:unless="${currentPage >1}"> Previous</span>
+	     &nbsp;&nbsp;
+	     
+	     <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+	       <a th:if="${i != currentPage}" th:href="@{'/all/product/page/' + ${i}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}">[[${i}]]</a> 
+	       <span th:unless="${i != currentPage}" >[[${i}]]</span> 
+	       &nbsp;&nbsp;
+	     </span>
+	     
+	     <a th:if="${currentPage <totalPages}" th:href="@{'/all/product/page/' + ${currentPage + 1}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Next</a>
+	     <span th:unless="${currentPage <totalPages}"> Next</span>
+	     &nbsp;&nbsp;
+	     
+	     <a th:if="${currentPage <totalPages}" th:href="@{'/all/product/page/' + ${totalPages}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir}}"> Last</a>
+	     <span th:unless="${currentPage <totalPages}"> Last</span>
+	     &nbsp;&nbsp;
+	   
+	   
+	     
+	     
+	    
+	</div>
+	<br/>
+
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

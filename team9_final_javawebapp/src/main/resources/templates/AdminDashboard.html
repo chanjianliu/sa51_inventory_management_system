@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<!-- Header -->
+    <header id="header">
+        <nav class="left">
+            <a href="#menu"><span>Menu</span></a>
+        </nav>
+        <a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+        <nav class="right">
+            <a href="/logout" class="button alt">Log out</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+
+<nav id="menu">
+    <ul class="links">
+        <li><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+    <ul class="actions vertical">
+        <li><a href="#" class="button fit">Logout</a></li>
+    </ul>
+</nav>
+
+<!-- White Space Content -->
+
+<!-- Main -->
+<table style="width: 50%; height:50%; margin-left:auto;margin-right:auto;">
+    <tr>
+
+    </tr>
+    <tr>
+
+<td>
+<div class="card" style="width: 18rem;">
+    <img th:src="@{/images/users.png}" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">Employees</h5>
+        <p class="card-text">Manage Employee Record.</p>
+        <a href="/admin/list" class="btn btn-danger">View</a>
+    </div>
+</div>
+</td>
+        <td>
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{/images/products.jpg}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Manage Products.</p>
+                    <a href="/all/product/list" class="btn btn-danger">View</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{/images/stockentryform.png}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Add New Product</h5>
+                    <p class="card-text">Add a New Product.</p>
+                    <a href="/admin/product/add" class="btn btn-danger">View </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+        <td>
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{/images/suppliers.png}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Suppliers</h5>
+                    <p class="card-text">Manage Suppliers.</p>
+                    <a href="/all/supplier/list" class="btn btn-danger">View</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{/images/inventory.png}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Stock Usage Records</h5>
+                    <p class="card-text">Manage Stock Usage Records.</p>
+                    <a href="/all/catalogue/listrecord" class="btn btn-danger">View</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{/images/customers.png}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Customers</h5>
+                    <p class="card-text">Manage Customers.</p>
+                    <a href="/all/catalogue/customers" class="btn btn-danger">View</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+
+        <td>
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{/images/generatereport.png}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Reorder Report</h5>
+                    <p class="card-text">Manage Reorder Reports.</p>
+                    <a href="/admin/product/report" class="btn btn-danger">View</a>
+                </div>
+            </div>
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

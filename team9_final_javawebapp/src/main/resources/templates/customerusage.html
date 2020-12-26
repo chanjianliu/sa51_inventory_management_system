@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<meta charset="utf-8" />
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/main.css" />
+	<title>Customer Usage Record</title>
+</head>
+
+<body>
+
+<!-- Header -->
+<header id="header">
+	<nav class="left">
+		<a href="#menu"><span>Menu</span></a>
+	</nav>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+		<a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+		<a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<nav class="right">
+		<a href="/logout" class="button alt">Log out</a>
+	</nav>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+	<ul class="links">
+		<li><a th:href="@{/all/catalogue/customers/}">Customer List</a></li>
+	</ul>
+	<ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+	<ul class="actions vertical">
+		<li><a href="#" class="button fit">Logout</a></li>
+	</ul>
+</nav>
+<table style="width:50%; margin-left: auto; margin-right: auto;">
+		<tr style="background-color:#ffffff;">
+			<td>
+				<h3>Customer ID: </h3>
+			<td th:text="${customer.id}" style="font-size: large  ; font-weight: bold;"></td>
+			<td colspan="2"><h3>Customer Name: </h3></td>
+			<td th:text="${customer.customerName}" style="font-size: large  ; font-weight: bold;"></td>
+			<td>
+			<h3>Car ID: </h3>
+			</td>
+			<td><h5 th:text="${customer.carId}" style="font-size: large  ; font-weight: bold; "> </h5></td>
+
+		</tr>
+
+		<tr>
+			<td>
+
+			</td>
+			<td>
+			</td>
+		</tr>
+
+
+
+
+		<tr>
+			<th colspan="9" style="background-color: #c8e7f0;font-size:xx-large  ; font-weight: bold; "><h1 align="center">Customer History</h1></th>
+		</tr>
+
+		<tr>
+			<th>Part Id</th>
+			<th>Name</th>
+			<th>Brand</th>
+			<th>Price</th>
+			<th>Description</th>
+			<th>Colour</th>
+			<th>Quantity</th>
+			<th>Registration Date</th>
+			<th>Delete</th>
+		</tr>
+
+
+		<tr th:each="obj:${usagesOfTheCustomer}">
+			<td th:text="${obj.productId}">Product Id</td>
+			<td><a th:href="@{/all/catalogue/showinventory/}+${obj.productId}" th:text="${obj.inventory.product.name}">Product Name</a></td>
+			<td th:text="${obj.inventory.product.brand}">Brand</td>
+			<td th:text="${obj.inventory.product.retailPrice}">Retail Price</td>
+			<td th:text="${obj.inventory.product.description}">Description</td>
+			<td th:text="${obj.inventory.product.colour}">Colour</td>
+			<td th:text="${obj.quantity}">Quantity</td>
+			<td th:text="${#temporals.format(obj.registrationDate, 'dd-MMM-yyyy')}">Date</td>
+			<td><a th:href="@{/all/catalogue/delete/}+${obj.id}"> Delete </a></td>
+		</tr>
+	<tr>
+
+	</tr>
+	<tr>
+			
+	</tr>
+	<tr>
+
+	</tr>
+		<tr>
+	<td>
+
+	</td>
+			<td colspan="2">
+				<a th:href="@{/all/catalogue/customers/}">
+					<button>Customer List</button>
+				</a>
+			</td>
+			<td colspan="2">
+				<a th:href="@{/all/catalogue/listrecord/}">
+					<button>Inventory Usage List</button>
+				</a>
+			</td>
+			<td colspan="2">
+				<a th:href="@{/all/catalogue/addusageform/}+${customer.id}">
+					<button>Add New Part</button>
+				</a>
+			</td>
+			<td colspan="2">
+				<a th:href="@{/all/catalogue/edit/}+${customer.id}">
+					<button>Edit History</button>
+				</a>
+			</td>
+
+			<td colspan="1">
+
+			</td>
+
+		</tr>
+	</table>
+
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

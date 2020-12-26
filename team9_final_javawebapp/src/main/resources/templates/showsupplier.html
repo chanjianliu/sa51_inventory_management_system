@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<meta charset="utf-8" />
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/main.css" />
+	<title>Supplier Details</title>
+</head>
+
+<body>
+<!-- Header -->
+<header id="header">
+	<nav class="left">
+		<a href="#menu"><span>Menu</span></a>
+	</nav>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}">
+		<a href="/admin/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).MECHANIC}">
+		<a href="/mechanic/dashboard" class="logo"><p th:utext = "${session.userdetails.firstName}+' ' +${session.userdetails.lastName}"></p></a>
+	</div>
+	<nav class="right">
+		<a href="/logout" class="button alt">Log out</a>
+	</nav>
+</header>
+
+<!-- Menu -->
+
+<nav id="menu">
+	<ul class="links">
+		<li><a href="/all/supplier/list">Suppliers</a></li>
+		<li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/supplier/add">Add New Supplier</a></li>
+		<li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/product/add">Add New Product</a></li>
+	</ul>
+
+	<ul class="links">
+        <li th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}"><a href="/admin/list">Employees</a></li>
+        <li><a href="/all/supplier/list">Supplier</a></li>
+        <li><a href="/all/product/list">Products</a></li>
+        <li><a href="/all/catalogue/customers">Customers</a></li>
+        <li><a href="/all/catalogue/listrecord">Stock Usage Records</a></li>
+    </ul>
+	<ul class="actions vertical">
+		<li><a href="#" class="button fit">Logout</a></li>
+	</ul>
+</nav>
+
+<br/>
+
+<h2 style="text-align: center">Supplier Details</h2>
+<div style="text-align: center; font-weight: bold;">
+	<a href="/all/supplier/list" >Back to Supplier List</a>
+</div>
+<br/>
+
+<table th:if="${not #lists.isEmpty(supplier)}" style="width:50%; margin-left: auto; margin-right: auto;">
+	<tr>
+		<th>Id</th>
+		<td th:text="${supplier.id}">ID</td>
+	</tr>
+	<tr>
+		<th>Name</th>
+		<td th:text="${supplier.name}">Name</td>
+	</tr>
+	<tr>
+		<th>Address</th>
+		<td th:text="${supplier.address}">Address</td>
+	</tr>
+	<tr>
+		<th>Role</th>
+		<td th:text="${supplier.email}">Email</td>
+	</tr>
+	<tr>
+		<th>Phone</th>
+		<td th:text="${supplier.phoneNumber}">Phone</td>
+	</tr>
+</table>
+
+<table th:if="${not #lists.isEmpty(products)}" style="width:50%; margin-left: auto; margin-right: auto;">
+		<tr>
+			<th colspan=18>
+				<div align="center">
+				<h3>Products</h3>
+				
+			</div></th>
+		</tr>
+		<tr>
+			<th >Product Id</th>
+			<th >Name</th>
+			<th >Brand</th>
+			<th >DOM</th>
+			<th >Color</th>
+			<th >Original Price</th>
+			<th >Whole Sale Price</th>
+			<th >Retail Price</th>
+			<th >Partner Price</th>
+			<th >Description</th>
+			<th >Dimension</th>
+			<th >Category</th>
+			<th >Reorder Level</th>
+			<th >minReorder Quantity</th>
+			<th> Shelf Location</th>
+			<th> Quantity</th>
+			<th> Product State</th>
+
+		</tr>
+		<tr th:each="product:${products}" class="table-row">
+			<td th:text="${product.inventory.id}">Id</td>
+			<td><a th:href="@{/all/catalogue/showinventory/}+${product.inventory.id}" th:text="${product.name}">name</a></td>
+			<td th:text="${product.brand}">brand</td>
+			<td th:text="${#temporals.format(product.dom, 'dd-MMM-yyyy')}">DOM</td>
+			<td th:text="${product.colour}">colour</td>
+			<td th:text="${product.oriPrice}">oriPrice</td>
+			<td th:text="${product.wholesalePrice}">wholesalePrice</td>
+			<td th:text="${product.retailPrice}">retailPrice</td>
+			<td th:text="${product.partnerPrice}">partnerPrice</td>
+			<td th:text="${product.description}">desc</td>
+			<td th:text="${product.dimension}">dimension</td>
+			<td th:text="${product.category}">category</td>
+			<td th:text="${product.reorderLevel}">reorderlevel</td>
+			<td th:text="${product.minReorderQuantity}">minRQ</td>
+			<td th:text="${product.inventory.shelfLocation}">ShelfLocation</td>
+			<td th:text="${product.inventory.quantity}">Quantity</td>
+			<td th:text="${product.inventory.productState}">ProductState</td>
+		</tr>
+		</table>
+		
+		<div th:if="${session.userdetails.role == T(com.team9.motors.model.Role).ADMIN}" style="text-align: center;">
+					<a href="/admin/product/add" > <button>Add New Product </button></a>
+				</div>
+
+
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrolly.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
