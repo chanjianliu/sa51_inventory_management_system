@@ -28,11 +28,11 @@ TEAM 9 Java CA
 
 
 Delivered By:
-AFRIN Rukaya (A0113802W)
-CHAN Jian Liu (A0226741H)
-LIU Lei (A0214899L)
-RAMAKRISHNAN Niveditha (A0214867W)
-XIAO Changwei (A0226757U)
-ZHANG Hongduo (A0226744B)
-ZHOU Yanjun (A0226701N)
-ZHU Haokun (A0226723H)
+AFRIN Rukaya
+CHAN Jian Liu
+LIU Lei
+RAMAKRISHNAN Niveditha
+XIAO Changwei
+ZHANG Hongduo
+ZHOU Yanjun
+ZHU Haokun
